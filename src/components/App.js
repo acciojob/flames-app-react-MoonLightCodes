@@ -10,25 +10,29 @@ const App = () => {
     3: "Affection",
     4: "Marriage",
     5: "Enemy",
-    0: "Siblings"
+    0: "Siblings",
   };
-  function calc(){
+  function calc() {
+    if (!boy || !girl) {
+      setPrediction("Please Enter valid input");
+      return;
+    }
     let b = boy;
     let bs = new Set(boy.split(""));
     let g = girl;
     let gs = new Set(girl.split(""));
-    let c ="";
-    for(let i of b){
-        if(!gs.has(i)){
-            c+=i;
-        }
+    let c = "";
+    for (let i of b) {
+      if (!gs.has(i)) {
+        c += i;
+      }
     }
-    for(let i of g){
-        if(!bs.has(i)){
-            c+=i;
-        }
+    for (let i of g) {
+      if (!bs.has(i)) {
+        c += i;
+      }
     }
-    let len = c.length%6;
+    let len = c.length % 6;
     setPrediction(result[len]);
   }
   return (
@@ -53,15 +57,19 @@ const App = () => {
         <button
           data-testid="calculate_relationship"
           name="calculate_relationship"
-          onClick={()=>calc()}
+          onClick={() => calc()}
         >
           Calculate Relation Future
         </button>
-        <button data-testid="clear" name="clear" onClick={()=>{
+        <button
+          data-testid="clear"
+          name="clear"
+          onClick={() => {
             setBoy("");
-            setGirl('');
+            setGirl("");
             setPrediction("");
-        }}>
+          }}
+        >
           Clear
         </button>
       </div>
