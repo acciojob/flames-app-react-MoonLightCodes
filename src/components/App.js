@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const App = () => {
   const [boy, setBoy] = useState("");
   const [girl, setGirl] = useState("");
   const [prediction, setPrediction] = useState("");
+  useEffect(() => {
+    return () => {};
+  }, []);
   const result = {
     1: "Friends",
     2: "Love",
@@ -13,26 +16,28 @@ const App = () => {
     0: "Siblings",
   };
   function calc() {
-    if (!boy || !girl) {
+    let bye = boy.toLowerCase();
+    let grl = girl.toLowerCase();
+    if (!bye || !grl) {
       setPrediction("Please Enter valid input");
       return;
     }
-    let b = boy;
-    let bs = new Set(boy.split(""));
-    let g = girl;
-    let gs = new Set(girl.split(""));
-    let c = "";
-    for (let i of b) {
-      if (!gs.has(i)) {
-        c += i;
+    let b = bye.split("").reduce((a, b) => {
+      return {
+        ...a,
+        [b]: (a[b] || 0) + 1,
+      };
+    }, {});
+    let c = grl.split("").reduce((acc, ele) => {
+      if (b[ele] && b[ele] > 0) {
+        b[ele]--;
+        acc++;
       }
-    }
-    for (let i of g) {
-      if (!bs.has(i)) {
-        c += i;
-      }
-    }
-    let len = c.length % 6;
+      return acc;
+    }, 0);
+    c=bye.length+grl.length-c;
+    //Object.entries(b).map((acc,[key,val]) => acc + (b[key]?Math.abs(b[key]-val):val) );
+    let len = c % 6;
     setPrediction(result[len]);
   }
   return (
