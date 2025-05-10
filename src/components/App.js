@@ -35,7 +35,7 @@ const App = () => {
       }
       return acc;
     }, 0);
-    c=bye.length+grl.length-c;
+    c=bye.length+grl.length-c-c;
     //Object.entries(b).map((acc,[key,val]) => acc + (b[key]?Math.abs(b[key]-val):val) );
     let len = c % 6;
     setPrediction(result[len]);
